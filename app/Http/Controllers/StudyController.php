@@ -13,7 +13,7 @@ class StudyController extends Controller
      */
     public function index()
     {
-        return view('study,index');
+        return view('study,index',compact('studies'));
     }
 
     /**
@@ -23,7 +23,7 @@ class StudyController extends Controller
      */
     public function create()
     {
-        //
+        return view('studies.create');
     }
 
     /**
@@ -34,7 +34,11 @@ class StudyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post(); 
+        $post->title = $request->input('title’); 
+        $post->content = $request->input('content');$post->save();
+        return redirect()->route(‘studies.show’, [‘id’ => $post->id])-
+        >with(‘message’, 登録に成功しました！’);
     }
 
     /**
@@ -45,7 +49,7 @@ class StudyController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('studies.show',compact('studies'));
     }
 
     /**
@@ -56,7 +60,7 @@ class StudyController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('studies.edit',compact('studies'));
     }
 
     /**

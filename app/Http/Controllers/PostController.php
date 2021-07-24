@@ -39,7 +39,11 @@ class PostController extends Controller
         $post = new Post(); 
         $post->title = $request->input('title');
         $post->content = $request->input('content'); 
-        $post->save(); 
+        $filename = $request->file('image')->getClientOriginalName();
+        $post->image = $filename;
+        //$storedata =  array_replace($request->all(), array('image' => $filename));
+        $post->save();
+        $request->file('image')->storeAs('public/'.$post->id.'/', $filename);
         //return redirect()->route('posts.show', ['id' => $post->id])->with('message', '登録に成功しました！');
         return redirect(route('posts.show', $post->id))->with('message', '新しい記事を登録しました。');
     }
